@@ -90,6 +90,12 @@ function DashboardPage() {
         </button>
       </div>
 
+      {error && !creating && (
+        <div className="mt-6 rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-sm font-medium text-destructive">
+          Error: {error}
+        </div>
+      )}
+
       {loading ? (
         <div className="mt-10 flex justify-center">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
