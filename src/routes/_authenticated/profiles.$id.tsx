@@ -67,9 +67,9 @@ function EditProfilePage() {
     setSaving(true); setMsg(null);
     try {
       await updateDoc(doc(db, "profiles", profile.id), {
-        name: profile.name, slug: profile.slug, title: profile.title, bio: profile.bio,
-        avatar_url: profile.avatar_url, email: profile.email, phone: profile.phone,
-        website: profile.website, calendly_url: profile.calendly_url, b2b_links: profile.b2b_links,
+        name: profile.name, slug: profile.slug, title: profile.title ?? null, bio: profile.bio ?? null,
+        avatar_url: profile.avatar_url ?? null, email: profile.email ?? null, phone: profile.phone ?? null,
+        website: profile.website ?? null, calendly_url: profile.calendly_url ?? null, b2b_links: profile.b2b_links ?? [],
       });
       setMsg("Guardado");
     } catch (err: any) {
