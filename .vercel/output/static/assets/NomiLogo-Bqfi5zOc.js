@@ -1,1 +1,0 @@
-import{l as r}from"./index-BQLYUXcF.js";const t=({className:e=""})=>r.jsx("span",{"aria-label":"Nomi",className:`inline-flex h-3.5 w-3.5 items-center justify-center rounded-[4px] bg-primary text-[8px] font-bold text-primary-foreground ${e}`,children:"N"});export{t as N};
