@@ -25,10 +25,15 @@ function DashboardPage() {
   const load = async () => {
     setLoading(true);
     if (!user) return;
-    const qProfiles = query(collection(db, "profiles"), where("user_id", "==", user.uid), orderBy("updated_at", "desc"));
-    const snapshot = await getDocs(qProfiles);
-    const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ProfileRow));
-    setProfiles(data);
+    try {
+      const qProfiles = query(collection(db, "profiles"), where("user_id", "==", user.uid), orderBy("updated_at", "desc"));
+      const snapshot = await getDocs(qProfiles);
+      const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ProfileRow));
+      setProfiles(data);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message);
+    }
     setLoading(false);
   };
 
