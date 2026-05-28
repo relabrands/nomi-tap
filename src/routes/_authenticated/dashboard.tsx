@@ -39,6 +39,8 @@ function DashboardPage() {
 
   useEffect(() => { load(); }, []);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleCreate = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -49,6 +51,7 @@ function DashboardPage() {
       return;
     }
     try {
+      setIsSubmitting(true);
       await addDoc(collection(db, "profiles"), {
         user_id: user.uid,
         name: form.name.trim(),
@@ -61,7 +64,10 @@ function DashboardPage() {
       setCreating(false);
       load();
     } catch (err: any) {
-      setError(err.message);
+      console.error("Firebase Create Error:", err);
+      setError(err.message || "Unknown error occurred while creating.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -151,9 +157,9 @@ function DashboardPage() {
                 className="flex-1 rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary">
                 Cancelar
               </button>
-              <button type="submit"
-                className="flex-1 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-[color:var(--primary-hover)]">
-                Crear
+              <button type="submit" disabled={isSubmitting}
+                className="flex-1 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-[color:var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed">
+                {isSubmitting ? "Creando..." : "Crear"}
               </button>
             </div>
           </form>
